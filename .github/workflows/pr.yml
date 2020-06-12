@@ -35,8 +35,12 @@ jobs:
       with:
         github-token: ${{secrets.GITHUB_TOKEN}}
         script: |
+          console.log('>----- context')
+          console.log(context)
+          
           const diff_url = context.payload.pull_request.diff_url
           const result = await github.request(diff_url)
+          console.log('>----- result')
           console.log(result)
 
     # その他公開アクション

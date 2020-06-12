@@ -20,6 +20,12 @@ jobs:
     - id: step2
       run: echo "::set-output name=output-step2::triggered"
 
+    # 自作Dockerアクション（ローカル）
+    - id: my-docker-action-local
+      uses: ./.github/actions/my-docker-action
+      with:
+        aho: 'Ahoooo'
+
     # GitHub APIを呼ぶ実験 with github-script
     - id: github-script-get-from-url
       uses: actions/github-script@v2
@@ -29,7 +35,6 @@ jobs:
           const diff_url = context.payload.pull_request.diff_url
           const result = await github.request(diff_url)
           console.log(result)
-
 
     - id: dump-contexts-after
       name: Dump contexts (After)

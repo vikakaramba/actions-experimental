@@ -20,6 +20,9 @@ jobs:
     - id: step2
       run: echo "::set-output name=output-step2::triggered"
 
+    - id: checkout
+      uses: actions/checkout@v2
+
     # 自作Dockerアクション（ローカル）
     - id: my-docker-action-local
       uses: ./.github/actions/my-docker-action

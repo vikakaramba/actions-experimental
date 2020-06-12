@@ -1,8 +1,8 @@
 on:
-  create
+  label
 
 env:
-  HOGE: create_hoge_global
+  HOGE: label_hoge_global
 
 jobs:
   job1:
@@ -15,7 +15,7 @@ jobs:
 
     steps:
     - id: step1
-      run: echo "::set-output name=output-step1::create"
+      run: echo "::set-output name=output-step1::label"
 
     - id: step2
       run: echo "::set-output name=output-step2::triggered"

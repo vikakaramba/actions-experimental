@@ -1,8 +1,9 @@
 on:
-  create
+  issue_comment:
+
 
 env:
-  HOGE: create_hoge_global
+  HOGE: issue_comment_opened_hoge_global
 
 jobs:
   job1:
@@ -15,7 +16,7 @@ jobs:
 
     steps:
     - id: step1
-      run: echo "::set-output name=output-step1::create"
+      run: echo "::set-output name=output-step1::issue_comment"
 
     - id: step2
       run: echo "::set-output name=output-step2::triggered"

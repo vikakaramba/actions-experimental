@@ -1,6 +1,6 @@
 # See: https://github.com/actions/labeler
 github-actions:
-- any: ['.github/workflows/**/*']
+- .github/workflows/**/*
 
 my-github-action:
-- any: ['.github/actions/**/*']
+- .github/actions/**/*

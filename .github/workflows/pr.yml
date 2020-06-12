@@ -37,9 +37,20 @@ jobs:
         script: |
           console.log('>----- context')
           console.log(context)
-          
+
           const diff_url = context.payload.pull_request.diff_url
           const result = await github.request(diff_url)
+          console.log('>----- result')
+          console.log(result)
+
+    - id: github-script-get-gist
+      uses: actions/github-script@v2
+      with:
+        github-token: ${{secrets.GITHUB_TOKEN}}
+        script: |
+          const result = await github.gists.get({
+            gist_id: '7112424a9776122f73b10a610572933b'
+          })
           console.log('>----- result')
           console.log(result)
 

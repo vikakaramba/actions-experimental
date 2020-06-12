@@ -1,0 +1,23 @@
+on:
+  # See: https://developer.github.com/v3/pulls/comments/
+  pull_request_review_comment:
+    # See: https://developer.github.com/webhooks/event-payloads/#pull_request_review_comment
+    #types: [created, edited, deleted]
+
+env:
+  HOGE: pr_review_comment_hoge_global
+
+jobs:
+  job1:
+    name: Job1
+    runs-on: ubuntu-latest
+
+    outputs:
+      output1: ${{ steps.step1.outputs.output-step1 }}
+      output2: ${{ steps.step2.outputs.output-step2 }}
+
+    steps:
+    - id: step1
+      run: echo "::set-output name=output-step1::pull_request_review_comment"
+    - id: step2
+      run: echo "::set-output name=output-step2::triggered"

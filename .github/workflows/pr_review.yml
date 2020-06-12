@@ -1,0 +1,21 @@
+on:
+  pull_request_review:
+    #types: [edited, dismissed]
+
+env:
+  HOGE: pr_review_hoge_global
+
+jobs:
+  job1:
+    name: Job1
+    runs-on: ubuntu-latest
+
+    outputs:
+      output1: ${{ steps.step1.outputs.output-step1 }}
+      output2: ${{ steps.step2.outputs.output-step2 }}
+
+    steps:
+    - id: step1
+      run: echo "::set-output name=output-step1::pull_request_review"
+    - id: step2
+      run: echo "::set-output name=output-step2::triggered"

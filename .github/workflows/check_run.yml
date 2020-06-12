@@ -1,0 +1,22 @@
+on:
+  check_run:
+    # See: https://developer.github.com/webhooks/event-payloads/#check_run
+    #types: [created, completed, rerequested, requested_action]
+
+env:
+  HOGE: check_run_hoge_global
+
+jobs:
+  job1:
+    name: Job1
+    runs-on: ubuntu-latest
+
+    outputs:
+      output1: ${{ steps.step1.outputs.output-step1 }}
+      output2: ${{ steps.step2.outputs.output-step2 }}
+
+    steps:
+    - id: step1
+      run: echo "::set-output name=output-step1::check_run"
+    - id: step2
+      run: echo "::set-output name=output-step2::triggered"

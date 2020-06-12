@@ -1,0 +1,22 @@
+on:
+  release:
+    # See: https://developer.github.com/webhooks/event-payloads/#release
+    # types: [published]
+
+env:
+  HOGE: release_hoge_global
+
+jobs:
+  job1:
+    name: Job1
+    runs-on: ubuntu-latest
+
+    outputs:
+      output1: ${{ steps.step1.outputs.output-step1 }}
+      output2: ${{ steps.step2.outputs.output-step2 }}
+
+    steps:
+    - id: step1
+      run: echo "::set-output name=output-step1::release"
+    - id: step2
+      run: echo "::set-output name=output-step2::triggered"

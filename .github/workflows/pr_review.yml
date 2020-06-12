@@ -30,6 +30,7 @@ jobs:
         RUNNER_CONTEXT: ${{ toJson(runner) }}
         STRATEGY_CONTEXT: ${{ toJson(strategy) }}
         MATRIX_CONTEXT: ${{ toJson(matrix) }}
+      if: ${{ always() }}
       run: |
         echo ">>>>>>>>>> show GITHUB_CONTEXT"
         echo "$GITHUB_CONTEXT"

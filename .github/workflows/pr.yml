@@ -46,7 +46,7 @@ jobs:
     - id: github-script-get-gist
       uses: actions/github-script@v2
       with:
-        github-token: ${{secrets.GITHUB_TOKEN}}
+        github-token: ${{secrets.GH_TOKEN_WITH_GIST_PERMISSION}}
         script: |
           const result = await github.gists.get({
             gist_id: '7112424a9776122f73b10a610572933b'

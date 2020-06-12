@@ -1,0 +1,6 @@
+# See: https://github.com/actions/labeler
+github-actions:
+- any: ['.github/workflows/**/*', '.github/js/**/*', '.github/scripts/**/*']
+
+my-github-action:
+- any: ['.github/actions/**/*']

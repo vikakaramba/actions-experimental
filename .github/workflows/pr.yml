@@ -39,6 +39,13 @@ jobs:
           const result = await github.request(diff_url)
           console.log(result)
 
+    # その他公開アクション
+    - id: labeler
+      # See: https://github.com/actions/labeler
+      uses: actions/labeler@v2
+      with:
+        repo-token: "${{ secrets.GITHUB_TOKEN }}"
+
     - id: dump-contexts-after
       name: Dump contexts (After)
       env:

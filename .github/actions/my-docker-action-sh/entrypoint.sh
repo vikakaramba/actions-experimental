@@ -1,5 +1,5 @@
 #!/bin/sh -l
 
-echo "Wayway!! $1"
+echo "Wayway-sh!! $1"
 time=$(date)
 echo ::set-output name=time::$time

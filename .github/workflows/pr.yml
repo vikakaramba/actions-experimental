@@ -24,11 +24,17 @@ jobs:
       uses: actions/checkout@v2
 
     # 自作Dockerアクション（ローカル）
-    - id: my-docker-action-local
-      name: my docker action local
-      uses: ./.github/actions/my-docker-action
+    - id: my-local-docker-action-sh
+      name: my local docker action (sh)
+      uses: ./.github/actions/my-docker-action-sh
       with:
-        aho: 'Ahoooo'
+        aho: 'Ahoooo-sh'
+
+    - id: my-local-docker-action-py
+      name: my local docker action (py)
+      uses: ./.github/actions/my-docker-action-py
+      with:
+        aho: 'Ahoooo-py'
 
     # GitHub APIを呼ぶ実験 with github-script
     - id: github-script-get-from-url

@@ -36,6 +36,7 @@ jobs:
       uses: actions/github-script@v2
       with:
         github-token: ${{ secrets.GITHUB_TOKEN }}
+        # See: context の内容については https://github.com/actions/toolkit/blob/master/packages/github/src/context.ts
         script: |
           console.log('>----- context')
           console.log(context)
@@ -54,6 +55,19 @@ jobs:
         script: |
           const result = await github.gists.get({
             gist_id: '7112424a9776122f73b10a610572933b'
+          })
+          console.log('>----- result')
+          console.log(result)
+
+    - id: github-script-list-actions-artifacts
+      name: get actions artifacts list with github-script(actions.listArtifactsForRepo)
+      uses: actions/github-script@v2
+      with:
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        script: |
+          const result = await github.actions.listArtifactsForRepo({
+            owner: 'goldeneggg',
+            repo: 'structil'
           })
           console.log('>----- result')
           console.log(result)

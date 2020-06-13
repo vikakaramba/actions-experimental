@@ -29,12 +29,12 @@ runs:
   #image: 'docker://debian:stetch-slim'
   args:
     - ${{ inputs.aho }}
-  #pre-entrypoint: 'setup.sh'
+  pre-entrypoint: 'setup.sh'
   #pre-if: 'runner.os == linux'
   #entrypoint: 'entrypoint.sh'
   #env:
     #ACTION_ENV: action_env
-  #post-entrypoint: 'cleanup.pt'
+  post-entrypoint: 'cleanup.sh'
   #post-if: 'runner.os == linux'
 
 # See: https://help.github.com/en/actions/creating-actions/metadata-syntax-for-github-actions#branding

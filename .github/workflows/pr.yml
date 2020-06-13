@@ -76,13 +76,17 @@ jobs:
       uses: actions/github-script@v2
       with:
         github-token: ${{ secrets.GITHUB_TOKEN }}
+        result-encoding: string
         script: |
-          const result = await github.actions.listArtifactsForRepo({
+          const artifacts = await github.actions.listArtifactsForRepo({
             owner: 'goldeneggg',
             repo: 'structil'
           })
-          console.log('>----- result')
-          console.log(result)
+          console.log('>----- artifacts')
+          console.log(artifacts)
+          console.log('>----- artifacts.data.artifacts[29]')
+          console.log(artifacts.data.artifacts[29])
+          return artifacts.data.artifacts[29].id
 
     # その他、公開されているアクションの検証
     - id: labeler

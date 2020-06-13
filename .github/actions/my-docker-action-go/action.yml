@@ -1,13 +1,13 @@
-name: 'Hogeo Hugao py'
+name: 'Hogeo Hugao go'
 author: 'goldeneggg'
-description: 'My local docker action Hoge Huga py'
+description: 'My local docker action Hoge Huga go'
 
 # See: https://help.github.com/en/actions/creating-actions/metadata-syntax-for-github-actions#inputs
 inputs:
   aho:
     description: 'Aho input'
     required: true
-    default: 'Huga-py'
+    default: 'Huga-go'
 
 # See: https://help.github.com/en/actions/creating-actions/metadata-syntax-for-github-actions#outputs
 outputs:
@@ -29,12 +29,12 @@ runs:
   #image: 'docker://debian:stetch-slim'
   args:
     - ${{ inputs.aho }}
-  #pre-entrypoint: 'setup.py'
+  #pre-entrypoint: 'setup.go'
   #pre-if: 'runner.os == linux'
-  #entrypoint: 'main.py'
+  #entrypoint: 'main.go'
   #env:
     #ACTION_ENV: action_env
-  #post-entrypoint: 'cleanup.py'
+  #post-entrypoint: 'cleanup.go'
   #post-if: 'runner.os == linux'
 
 # See: https://help.github.com/en/actions/creating-actions/metadata-syntax-for-github-actions#branding

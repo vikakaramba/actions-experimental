@@ -36,6 +36,12 @@ jobs:
       with:
         aho: 'Ahoooo-py'
 
+    - id: my-local-docker-action-go
+      name: my local docker action (go)
+      uses: ./.github/actions/my-docker-action-go
+      with:
+        aho: 'Ahoooo-go'
+
     # GitHub APIを呼ぶ実験 with github-script
     - id: github-script-get-from-url
       name: get github diff with github-script(request)

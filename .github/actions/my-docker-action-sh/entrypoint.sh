@@ -2,6 +2,8 @@
 
 echo "Entrypoint-sh!! $1"
 
+env
+
 echo "STATE_ST_ID=${STATE_ST_ID}"
 
 echo "::debug::debug entrypoint.sh"

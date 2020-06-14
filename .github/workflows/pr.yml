@@ -23,78 +23,78 @@ jobs:
     - id: checkout
       uses: actions/checkout@v2
 
-    # 自作Dockerアクション（ローカル）
-    - id: my-local-docker-action-sh
-      name: my local docker action (sh)
-      uses: ./.github/actions/my-docker-action-sh
-      with:
-        aho: 'Ahoooo-sh'
+    # # 自作Dockerアクション（ローカル）
+    # - id: my-local-docker-action-sh
+    #   name: my local docker action (sh)
+    #   uses: ./.github/actions/my-docker-action-sh
+    #   with:
+    #     aho: 'Ahoooo-sh'
 
-    - id: my-local-docker-action-py
-      name: my local docker action (py)
-      uses: ./.github/actions/my-docker-action-py
-      with:
-        aho: 'Ahoooo-py'
+    # - id: my-local-docker-action-py
+    #   name: my local docker action (py)
+    #   uses: ./.github/actions/my-docker-action-py
+    #   with:
+    #     aho: 'Ahoooo-py'
 
-    - id: my-local-docker-action-go
-      name: my local docker action (go)
-      uses: ./.github/actions/my-docker-action-go
-      with:
-        aho: 'Ahoooo-go'
+    # - id: my-local-docker-action-go
+    #   name: my local docker action (go)
+    #   uses: ./.github/actions/my-docker-action-go
+    #   with:
+    #     aho: 'Ahoooo-go'
 
-    # GitHub APIを呼ぶ実験 with github-script
-    - id: github-script-get-from-url
-      name: get github diff with github-script(request)
-      uses: actions/github-script@v2
-      with:
-        github-token: ${{ secrets.GITHUB_TOKEN }}
-        # See: context の内容については https://github.com/actions/toolkit/blob/master/packages/github/src/context.ts
-        script: |
-          console.log('>----- context')
-          console.log(context)
+    # # GitHub APIを呼ぶ実験 with github-script
+    # - id: github-script-get-from-url
+    #   name: get github diff with github-script(request)
+    #   uses: actions/github-script@v2
+    #   with:
+    #     github-token: ${{ secrets.GITHUB_TOKEN }}
+    #     # See: context の内容については https://github.com/actions/toolkit/blob/master/packages/github/src/context.ts
+    #     script: |
+    #       console.log('>----- context')
+    #       console.log(context)
 
-          const diff_url = context.payload.pull_request.diff_url
-          const result = await github.request(diff_url)
-          console.log('>----- result')
-          console.log(result)
+    #       const diff_url = context.payload.pull_request.diff_url
+    #       const result = await github.request(diff_url)
+    #       console.log('>----- result')
+    #       console.log(result)
 
-    - id: github-script-get-gist
-      name: get gist by id with github-script(gists.get)
-      uses: actions/github-script@v2
-      with:
-        # gistにアクセスできるtokenは別途発行必要。デフォルトのsecrets.GITHUB_TOKENでは不可
-        github-token: ${{ secrets.GH_TOKEN_WITH_GIST_PERMISSION }}
-        script: |
-          const result = await github.gists.get({
-            gist_id: '7112424a9776122f73b10a610572933b'
-          })
-          console.log('>----- result')
-          console.log(result)
+    # - id: github-script-get-gist
+    #   name: get gist by id with github-script(gists.get)
+    #   uses: actions/github-script@v2
+    #   with:
+    #     # gistにアクセスできるtokenは別途発行必要。デフォルトのsecrets.GITHUB_TOKENでは不可
+    #     github-token: ${{ secrets.GH_TOKEN_WITH_GIST_PERMISSION }}
+    #     script: |
+    #       const result = await github.gists.get({
+    #         gist_id: '7112424a9776122f73b10a610572933b'
+    #       })
+    #       console.log('>----- result')
+    #       console.log(result)
 
-    - id: github-script-list-actions-artifacts
-      name: get actions artifacts list with github-script(actions.listArtifactsForRepo)
-      uses: actions/github-script@v2
-      with:
-        github-token: ${{ secrets.GITHUB_TOKEN }}
-        result-encoding: string
-        script: |
-          const artifacts = await github.actions.listArtifactsForRepo({
-            owner: 'goldeneggg',
-            repo: 'structil'
-          })
-          console.log('>----- artifacts')
-          console.log(artifacts)
-          console.log('>----- artifacts.data.artifacts[29]')
-          console.log(artifacts.data.artifacts[29])
-          return artifacts.data.artifacts[29].id
+    # - id: github-script-list-actions-artifacts
+    #   name: get actions artifacts list with github-script(actions.listArtifactsForRepo)
+    #   uses: actions/github-script@v2
+    #   with:
+    #     github-token: ${{ secrets.GITHUB_TOKEN }}
+    #     result-encoding: string
+    #     script: |
+    #       const artifacts = await github.actions.listArtifactsForRepo({
+    #         owner: 'goldeneggg',
+    #         repo: 'structil'
+    #       })
+    #       console.log('>----- artifacts')
+    #       console.log(artifacts)
+    #       console.log('>----- artifacts.data.artifacts[29]')
+    #       console.log(artifacts.data.artifacts[29])
+    #       return artifacts.data.artifacts[29].id
 
-    # その他、公開されているアクションの検証
-    - id: labeler
-      name: attach label to this pull request with actions/labeler
-      # See: https://github.com/actions/labeler
-      uses: actions/labeler@v2
-      with:
-        repo-token: "${{ secrets.GITHUB_TOKEN }}"
+    # # その他、公開されているアクションの検証
+    # - id: labeler
+    #   name: attach label to this pull request with actions/labeler
+    #   # See: https://github.com/actions/labeler
+    #   uses: actions/labeler@v2
+    #   with:
+    #     repo-token: "${{ secrets.GITHUB_TOKEN }}"
 
     - id: notify-slack
       name: notify slack
@@ -104,7 +104,7 @@ jobs:
       # See: https://github.com/abinoda/slack-action
       uses: pullreminders/slack-action@master
       with:
-        args: '{\"channel\":\"${{ env.SLACK_CHANNEL_ID }}\",\"text\":\"Hello world\"}'
+        args: '{\"channel\":\"${{ env.SLACK_CHANNEL_ID }}\",\"text\":\"Hello World\"}'
 
 
     - id: dump-contexts-after

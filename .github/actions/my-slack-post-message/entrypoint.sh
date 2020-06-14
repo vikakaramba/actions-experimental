@@ -20,15 +20,16 @@ then
   exit 1
 fi
 
-jsonfile=result.json
+jsonfile=/tmp/result.json
+
 curl -X POST \
      -H "Content-type: application/json; charset=UTF-8" \
      -H "Authorization: Bearer ${INPUT_BOT_TOKEN}" \
      -d '{\"channel\":\"'${INPUT_CHANNEL_ID}'\",\"text\":\"'${INPUT_TEXT}'\"}' \
      https://slack.com/api/chat.postMessage > ${jsonfile}
 
-ok=$(cat ${jsonfile | jq '.ok')
-response_metadata=$(cat ${jsonfile | jq '.response_metadata')
+ok=$(cat ${jsonfile} | jq '.ok')
+response_metadata=$(cat ${jsonfile} | jq '.response_metadata')
 
 echo "::set-output name=ok::${ok}"
 echo "::set-output name=response_metadata::${response_metadata}"

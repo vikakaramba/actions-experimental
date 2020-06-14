@@ -100,10 +100,11 @@ jobs:
       name: notify slack
       env:
         SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+        SLACK_CHANNEL_ID: ${{ secrets.SLACK_CHANNEL_ID }}
       # See: https://github.com/abinoda/slack-action
       uses: pullreminders/slack-action@master
       with:
-        args: '{\"channel\":\"${{ secrets.SLACK_CHANNEL_ID }}\",\"text\":\"Hello world\"}'
+        args: '{\"channel\":\"${{ env.SLACK_CHANNEL_ID }}\",\"text\":\"Hello world\"}'
 
 
     - id: dump-contexts-after

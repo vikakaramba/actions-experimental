@@ -16,10 +16,8 @@ inputs:
 
 # See: https://help.github.com/en/actions/creating-actions/metadata-syntax-for-github-actions#outputs
 outputs:
-  ok:
-    description: '"ok" slack response (true is success, false is failure)'
-  response_metadata:
-    description: '"response_metadata" slack response'
+  json:
+    description: 'response JSON from slack'
 
 runs:
   # for JavaScript  See: https://help.github.com/en/actions/creating-actions/metadata-syntax-for-github-actions#runs-for-javascript-actions

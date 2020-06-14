@@ -20,7 +20,7 @@ jobs:
       with:
         bot_token: ${{ secrets.SLACK_BOT_TOKEN }}
         channel_id: ${{ secrets.SLACK_CHANNEL_ID }}
-        text: "Hello Hoge World"
+        text: "Hello HogeHuga World"
 
     - id: dump-contexts-after
       name: Dump contexts (After)

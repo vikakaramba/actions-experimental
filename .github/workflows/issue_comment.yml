@@ -21,6 +21,9 @@ jobs:
     - id: step2
       run: echo "::set-output name=output-step2::triggered"
 
+    - id: checkout
+      uses: actions/checkout@v2
+
     - id: dump-contexts-after
       name: Dump contexts (After)
       env:

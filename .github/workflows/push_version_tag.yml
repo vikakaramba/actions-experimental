@@ -1,11 +1,10 @@
 on:
-  issues:
-    # See: https://developer.github.com/webhooks/event-payloads/#issues
-    # types: [opened, edited, deleted, pinned, unpinned, closed, reopened, assigned, unassigned, labeled, unlabeled, locked, unlocked, transferred, milestoned, demilestoned]
-
+  push:
+    tags:
+      - 'v*'
 
 env:
-  HOGE: issues_opened_hoge_global
+  HOGE: push_master_hoge_global
 
 jobs:
   job1:
@@ -18,13 +17,39 @@ jobs:
 
     steps:
     - id: step1
-      run: echo "::set-output name=output-step1::issues"
+      run: echo "::set-output name=output-step1::push_master"
 
     - id: step2
       run: echo "::set-output name=output-step2::triggered"
 
     - id: checkout
       uses: actions/checkout@v2
+
+    - id: create-release
+      # See: https://github.com/actions/create-release
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: ${{ github.ref }}
+        release_name: Release ${{ github.ref }}
+        body: |
+          Changes in this Release
+          - First Change
+          - Second Change
+        draft: true
+        prerelease: false
+
+    - id: upload-release-asset 
+      # See: https://github.com/actions/upload-release-asset
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: ./my-artifact.zip
+        asset_name: my-artifact.zip
+        asset_content_type: application/zip
 
     - id: dump-contexts-after
       name: Dump contexts (After)

@@ -1,0 +1,6 @@
+# See: https://github.com/actions/labeler
+github-actions:
+- .github/workflows/**/*
+
+my-github-action:
+- .github/actions/**/*

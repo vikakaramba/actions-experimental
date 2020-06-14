@@ -25,6 +25,37 @@ jobs:
     - id: checkout
       uses: actions/checkout@v2
 
+    # TODO:
+    # 1. ベンチマーク結果をルートフォルダ直下に作成してpushする
+    # 2. 1 を含めて、新規release をdraft で作成する
+    - id: create-benchmark-report
+      name: create benchmark report
+      run: date +%s > BENCHMARK_MASTER.txt
+
+    # See: https://stackoverflow.com/questions/57921401/push-to-origin-from-github-action
+    - id: commit-push-report
+      name: commit and push benchmark report
+      run: |
+        git config --global user.name 'goldeneggg'
+        git config --global user.email 'jpshadowapps@gmail.com'
+        git commit -am "Automated update benchmark report"
+        git push
+
+    - id: create-release
+      name: create Release
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: ${{ github.ref }}
+        release_name: Release ${{ github.ref }}
+        body: |
+          Changes in this Release
+          - First Change
+          - Second Change
+        draft: true
+        prerelease: false
+
     - id: dump-contexts-after
       name: Dump contexts (After)
       env:

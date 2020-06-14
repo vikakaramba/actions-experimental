@@ -6,12 +6,15 @@ GitHub Actions experimental repositry
 
 ### Run local
 Use [nektos/act: Run your GitHub Actions locally 🚀](https://github.com/nektos/act)
-[Workflow runs \| GitHub Developer Guide](https://developer.github.com/v3/actions/workflow-runs/)
 
 
 ### API with curl
+
+[Workflow runs \| GitHub Developer Guide](https://developer.github.com/v3/actions/workflow-runs/)
+
 ```sh
 # https://developer.github.com/v3/actions/workflow-runs/#list-workflow-runs
+workflow_id=xxx
 curl -H "Authorization: token ${GITHUB_TOKEN}" "https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPOS}/actions/workflows/${workflow_id}/runs"
 
 # https://developer.github.com/v3/actions/workflow-runs/#get-a-workflow-run
@@ -55,4 +58,123 @@ curl -H "Authorization: token ${GITHUB_TOKEN}" "https://api.github.com/users/${G
 # https://developer.github.com/v3/gists/#get-a-gist
 gist_id=xxx
 curl -H "Authorization: token ${GITHUB_TOKEN}" "https://api.github.com/gists/${gist_id}"
+```
+
+#### jq
+
+sample.json
+
+```json
+{
+  "id": 123456789,
+  "node_id": "XXXXXXXXXXXXXXXXXXXXXXXXXXXXMzE2",
+  "head_branch": "fix-ci",
+  "head_sha": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+  "run_number": 46,
+  "event": "pull_request",
+  "status": "completed",
+  "conclusion": "success",
+  "workflow_id": 987654,
+  "url": "https://api.github.com/repos/goldeneggg/structil/actions/runs/23456789",
+  "html_url": "https://github.com/goldeneggg/structil/actions/runs/23456789",
+  "pull_requests": [
+    {
+      "url": "https://api.github.com/repos/goldeneggg/structil/pulls/19",
+      "id": 334455667,
+      "number": 19,
+      "head": {
+        "ref": "fix-ci",
+        "sha": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+        "repo": {
+          "id": 445566778,
+          "url": "https://api.github.com/repos/goldeneggg/structil",
+          "name": "structil"
+        }
+      },
+      "base": {
+        "ref": "master",
+        "sha": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+        "repo": {
+          "id": 556677889,
+          "url": "https://api.github.com/repos/goldeneggg/structil",
+          "name": "structil"
+        }
+      }
+    }
+  ],
+  "created_at": "2020-06-12T01:03:59Z",
+  "updated_at": "2020-06-12T01:11:20Z"
+}
+```
+
+
+```sh
+# get only "id"
+$ cat sample.json | jq '.id'
+123456789
+
+# get only "id" and "node_id"
+$ cat sample.json | jq '. | {id, node_id}'
+{
+  "id": 123456789,
+  "node_id": "XXXXXXXXXXXXXXXXXXXXXXXXXXXXMzE2"
+}
+
+# get list "pull_request"
+$ cat sample.json | jq '.pull_requests'
+[
+  {
+    "url": "https://api.github.com/repos/goldeneggg/structil/pulls/19",
+    "id": 334455667,
+    "number": 19,
+    "head": {
+      "ref": "fix-ci",
+      "sha": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+      "repo": {
+        "id": 445566778,
+        "url": "https://api.github.com/repos/goldeneggg/structil",
+        "name": "structil"
+      }
+    },
+    "base": {
+      "ref": "master",
+      "sha": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+      "repo": {
+        "id": 556677889,
+        "url": "https://api.github.com/repos/goldeneggg/structil",
+        "name": "structil"
+      }
+    }
+  }
+]
+
+# get element index 0 from list "pull_request"
+$ cat sample.json | jq '.pull_requests[0]'
+{
+  "url": "https://api.github.com/repos/goldeneggg/structil/pulls/19",
+  "id": 334455667,
+  "number": 19,
+  "head": {
+    "ref": "fix-ci",
+    "sha": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+    "repo": {
+      "id": 445566778,
+      "url": "https://api.github.com/repos/goldeneggg/structil",
+      "name": "structil"
+    }
+  },
+  "base": {
+    "ref": "master",
+    "sha": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+    "repo": {
+      "id": 556677889,
+      "url": "https://api.github.com/repos/goldeneggg/structil",
+      "name": "structil"
+    }
+  }
+}
+
+# get nested element from element index 0 from list "pull_request"
+$ cat sample.json | jq '.pull_requests[0].head.ref'
+"fix-ci"
 ```

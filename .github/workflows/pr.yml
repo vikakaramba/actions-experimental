@@ -5,6 +5,64 @@ env:
   HOGE: pr_hoge_global
 
 jobs:
+  exp:
+    name: Experimental
+    runs-on: ubuntu-latest
+
+    steps:
+    - id: checkout
+      uses: actions/checkout@v2
+
+    - id: my-slack-post
+      name: my slack post message action
+      #uses: pullreminders/slack-action@master
+      uses: ./.github/actions/my-slack-post-message
+      with:
+        bot_token: ${{ secrets.SLACK_BOT_TOKEN }}
+        channel_id: ${{ secrets.SLACK_CHANNEL_ID }}
+        text: "Hello HogeHuga World"
+
+    - id: dump-contexts-after
+      name: Dump contexts (After)
+      env:
+        GITHUB_CONTEXT: ${{ toJson(github) }}
+        ENV_CONTEXT: ${{ toJson(env) }}
+        JOB_CONTEXT: ${{ toJson(job) }}
+        STEPS_CONTEXT: ${{ toJson(steps) }}
+        RUNNER_CONTEXT: ${{ toJson(runner) }}
+        NEEDS_CONTEXT: ${{ toJson(needs) }}
+        STRATEGY_CONTEXT: ${{ toJson(strategy) }}
+        MATRIX_CONTEXT: ${{ toJson(matrix) }}
+      if: ${{ always() }}
+      run: |
+        echo ">>>>>>>>>> show GITHUB_CONTEXT"
+        echo "$GITHUB_CONTEXT"
+        echo ">>>>>>>>>> show ENV_CONTEXT"
+        echo "$ENV_CONTEXT"
+        echo ">>>>>>>>>> show JOB_CONTEXT"
+        echo "$JOB_CONTEXT"
+        echo ">>>>>>>>>> show STEPS_CONTEXT"
+        echo "$STEPS_CONTEXT"
+        echo ">>>>>>>>>> show RUNNER_CONTEXT"
+        echo "$RUNNER_CONTEXT"
+        echo ">>>>>>>>>> show NEEDS_CONTEXT"
+        echo "$NEEDS_CONTEXT"
+        echo ">>>>>>>>>> show STRATEGY_CONTEXT"
+        echo "$STRATEGY_CONTEXT"
+        echo ">>>>>>>>>> show MATRIX_CONTEXT"
+        echo "$MATRIX_CONTEXT"
+
+
+# TODO: AWS連携 実験
+
+
+# TODO: Google Drive APIを呼ぶ実験
+
+
+  ###
+  # dummy jobs
+  ###
+
   job1:
     name: Job1
     runs-on: ubuntu-latest
@@ -96,6 +154,7 @@ jobs:
       with:
         repo-token: "${{ secrets.GITHUB_TOKEN }}"
 
+
     - id: dump-contexts-after
       name: Dump contexts (After)
       env:
@@ -133,40 +192,3 @@ jobs:
     needs: job1
     steps:
     - run: echo ${{ needs.job1.outputs.output1 }} ${{ needs.job1.outputs.output2 }}
-
-
-# TODO: Slack通知実験
-
-
-
-# TODO: AWS連携 実験
-
-
-
-  # macosとubuntuで実行するジョブの実験
-  job-mac-ubuntu:
-    name: job with mac and ubuntu
-    runs-on: ${{ matrix.os }}
-    strategy:
-      matrix:
-        os: [ 'macos-latest', 'ubuntu-latest' ]
-      fail-fast: false
-
-    outputs:
-      output1: ${{ steps.step1.outputs.output-step1 }}
-      output2: ${{ steps.step2.outputs.output-step2 }}
-
-    steps:
-    - id: step1
-      run: echo "::set-output name=output-step1::hello"
-    - id: step2
-      run: echo "::set-output name=output-step2::world"
-
-
-
-
-
-
-
-
-# TODO: Google Drive APIを呼ぶ実験

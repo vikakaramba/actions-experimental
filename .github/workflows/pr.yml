@@ -96,6 +96,15 @@ jobs:
       with:
         repo-token: "${{ secrets.GITHUB_TOKEN }}"
 
+    - id: notify-slack
+      name: notify slack
+      env:
+        SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+      # See: https://github.com/abinoda/slack-action
+      uses: pullreminders/slack-action@master
+      with:
+        args: '{\"channel\":\"${{ secrets.SLACK_CHANNEL_ID }}\",\"text\":\"Hello world\"}'
+
 
     - id: dump-contexts-after
       name: Dump contexts (After)

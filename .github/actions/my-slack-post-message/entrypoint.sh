@@ -26,7 +26,7 @@ curl -s -X POST \
      -H "Content-type: application/json; charset=UTF-8" \
      -H "Authorization: Bearer ${INPUT_BOT_TOKEN}" \
      -d "{\"channel\":\"${INPUT_CHANNEL_ID}\",\"text\":\"${INPUT_TEXT}\"}" \
-     -o ${jsonfile}
+     -o ${jsonfile} \
      https://slack.com/api/chat.postMessage
 
 echo "::set-output name=json::$(cat ${jsonfile})"

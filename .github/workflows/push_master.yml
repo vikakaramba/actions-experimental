@@ -36,9 +36,12 @@ jobs:
     - id: commit-push-report
       name: commit and push benchmark report
       run: |
+        pwd
+        ls -l
         git config --global user.name 'goldeneggg'
         git config --global user.email 'jpshadowapps@gmail.com'
-        git commit -am "Automated update benchmark report"
+        git add BENCHMARK_MASTER.txt
+        git commit -m "Automated update benchmark report"
         git push
 
     - id: create-release

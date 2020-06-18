@@ -20,7 +20,7 @@ jobs:
     - name: Setup and Run test
       id: setup-and-run-test
       run: |
-        source $(cat .env | awk '!/^#/' | awk '/./{print $0}')
+        source $(cat .env | awk '!/^#/' | awk '/./{print $0}' | sed -e 's/^/export /g')
         env
 
     - id: my-slack-post

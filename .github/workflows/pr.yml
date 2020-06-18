@@ -13,6 +13,16 @@ jobs:
     - id: checkout
       uses: actions/checkout@v2
 
+    - name: Generate dotenv
+      id: generate-dotenv
+      run: cp .env.sample .env
+
+    - name: Setup and Run test
+      id: setup-and-run-test
+      run: |
+        source $(cat .env | awk '!/^#/' | awk '/./{print $0}')
+        env
+
     - id: my-slack-post
       name: my slack post message action
       #uses: pullreminders/slack-action@master

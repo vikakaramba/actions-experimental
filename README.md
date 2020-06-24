@@ -1,6 +1,32 @@
 GitHub Actions experimental repositry
 ==========
 
+
+## aws-actionsの実例
+
+### Fargateへのデプロイ
+[docker build \-t test\-nginx\. && docker run \-p 8080:80 test\-nginx](https://dev.classmethod.jp/articles/github-actions-fargate-deploy/)
+
+
+セットアップ
+
+1. Dockerfileを用意（nginxが動くだけのものでOK）
+2. AWS consoleでECRリポジトリを作成（`githubactions-nginx`）
+3. AWS consoleでこのactionを試すためのIAMユーザーを作成
+    - `AmazonECS_FullAccess`, `AmazonEC2ContainerRegistryFullAccess` ポリシーを付与しておく￥
+4. タスク定義のjsonを作成（task-definition.json）。内容はファイルを参照
+    - 参考: [タスク定義テンプレート(Fargate)](https://docs.aws.amazon.com/ja_jp/AmazonECS/latest/userguide/create-task-definition.html#task-definition-template)
+    - AWS consoleから実施する場合は、[タスク定義の作成 \- Amazon Elastic Container Service](https://docs.aws.amazon.com/ja_jp/AmazonECS/latest/developerguide/create-task-definition.html) や [タスク定義の作成 \- Amazon ECS](https://docs.aws.amazon.com/ja_jp/AmazonECS/latest/userguide/create-task-definition.html) を参照
+5. 公式 aws-actions から落としてきたaction yamlを修正する
+    - region
+    - REPOSITORY
+    - container-name
+    - service
+    - cluster
+6. githubのsettingsから2つのシークレットを登録
+    - AWS_ACCESS_KEY_ID
+    - AWS_SECRET_ACCESS_KEY
+
 ## Tips
 
 

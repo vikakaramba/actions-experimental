@@ -14,21 +14,35 @@ GitHub Actions experimental repositry
 2. AWS consoleでECSクラスタを Fargate で作成（`exmerimental-fargate-cluster`）
     - 新しいVPCを作成する（デフォルトVPCを流用すると、後で削除する際にメンドイ為） `10.90.0.0/16`
     - Container Insights を有効にしておく（試したい為）
-3. AWS consoleでECRリポジトリを作成（`githubactions-nginx`）
-4. AWS consoleでこのactionを試すためのIAMユーザーを作成
+3. ~~クラスタで作成されたVPCのサブネットはpublic（作成時に選べない）、且つサービス作成時に選択出来るサブネットがprivateのみ、という仕様でconflictしてしまっているので、別途VPC内にprivateサブネットを作成する~~  ___何かpuiblic subnetでもイケた___
+    - ~~~AWS consoleからVPCを開く　※作成したVPCに名前をつけておく（ついでに）`exmerimental-fargate-cluster-vpc`~~~
+    - ~~~サブネットを作成する。azはa, cで、それぞれ未使用CIDRを割り当てて作成~~~
+4. AWS consoleでECRリポジトリを作成（`githubactions-nginx`）
+5. AWS consoleでこのactionを試すためのIAMユーザーを作成
     - `AmazonECS_FullAccess`, `AmazonEC2ContainerRegistryFullAccess` ポリシーを付与しておく￥
-5. タスク定義のjsonを作成（task-definition.json）。内容はファイルを参照
+6. タスク定義のjsonを作成（task-definition.json）。内容はファイルを参照
     - 参考: [タスク定義テンプレート(Fargate)](https://docs.aws.amazon.com/ja_jp/AmazonECS/latest/userguide/create-task-definition.html#task-definition-template)
     - AWS consoleから実施する場合は、[タスク定義の作成 \- Amazon Elastic Container Service](https://docs.aws.amazon.com/ja_jp/AmazonECS/latest/developerguide/create-task-definition.html) や [タスク定義の作成 \- Amazon ECS](https://docs.aws.amazon.com/ja_jp/AmazonECS/latest/userguide/create-task-definition.html) を参照
-6. 公式 aws-actions から落としてきたaction yamlを修正する
+7. 公式 aws-actions から落としてきたaction yamlを修正する
     - region
     - REPOSITORY
     - container-name
     - service
     - cluster
-7. githubのsettingsから2つのシークレットを登録
+8. githubのsettingsから2つのシークレットを登録
     - AWS_ACCESS_KEY_ID
     - AWS_SECRET_ACCESS_KEY
+
+
+actions workflowをpull_request起動にしてみて、prを作成してみる
+→ deploy stepが `##[error]arn:aws:ecs:ap-northeast-1:***:service/spot-ecs is MISSING` というエラーでコケる
+→ これは結局、「先にtask jsonでtaskは作られるが、serviceは作られない」事に起因していて、1回コケるのはやむを得ないのでは？？
+→ しょうがないので、このtaskに紐付くserviceをAWS consoleの タスク定義 から作って再トライ。起動タイプは `FARGATE`, サービス名は `githubactions-nginx-service` タスクの数は取り敢えず `1` で
+→ 作成したサービス名をactions yamlに設定して再挑戦！
+→
+
+
+
 
 ## Tips
 

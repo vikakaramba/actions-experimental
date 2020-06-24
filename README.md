@@ -11,19 +11,22 @@ GitHub Actions experimental repositry
 セットアップ
 
 1. Dockerfileを用意（nginxが動くだけのものでOK）
-2. AWS consoleでECRリポジトリを作成（`githubactions-nginx`）
-3. AWS consoleでこのactionを試すためのIAMユーザーを作成
+2. AWS consoleでECSクラスタを Fargate で作成（`exmerimental-fargate-cluster`）
+    - 新しいVPCを作成する（デフォルトVPCを流用すると、後で削除する際にメンドイ為） `10.90.0.0/16`
+    - Container Insights を有効にしておく（試したい為）
+3. AWS consoleでECRリポジトリを作成（`githubactions-nginx`）
+4. AWS consoleでこのactionを試すためのIAMユーザーを作成
     - `AmazonECS_FullAccess`, `AmazonEC2ContainerRegistryFullAccess` ポリシーを付与しておく￥
-4. タスク定義のjsonを作成（task-definition.json）。内容はファイルを参照
+5. タスク定義のjsonを作成（task-definition.json）。内容はファイルを参照
     - 参考: [タスク定義テンプレート(Fargate)](https://docs.aws.amazon.com/ja_jp/AmazonECS/latest/userguide/create-task-definition.html#task-definition-template)
     - AWS consoleから実施する場合は、[タスク定義の作成 \- Amazon Elastic Container Service](https://docs.aws.amazon.com/ja_jp/AmazonECS/latest/developerguide/create-task-definition.html) や [タスク定義の作成 \- Amazon ECS](https://docs.aws.amazon.com/ja_jp/AmazonECS/latest/userguide/create-task-definition.html) を参照
-5. 公式 aws-actions から落としてきたaction yamlを修正する
+6. 公式 aws-actions から落としてきたaction yamlを修正する
     - region
     - REPOSITORY
     - container-name
     - service
     - cluster
-6. githubのsettingsから2つのシークレットを登録
+7. githubのsettingsから2つのシークレットを登録
     - AWS_ACCESS_KEY_ID
     - AWS_SECRET_ACCESS_KEY
 

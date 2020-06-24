@@ -26,7 +26,6 @@
 on:
   release:
     types: [created]
-  pull_request:
 
 name: Deploy to Amazon ECS
 

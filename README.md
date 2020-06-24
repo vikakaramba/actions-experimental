@@ -40,9 +40,8 @@ actions workflowをpull_request起動にしてみて、prを作成してみる
 → しょうがないので、このtaskに紐付くserviceをAWS consoleの タスク定義 から作って再トライ。起動タイプは `FARGATE`, サービス名は `githubactions-nginx-service` タスクの数は取り敢えず `1`, サブネットは `ALBでも割り当てるpublicなもの2つ`, ロードバランシングは `ALB`（要・別途作成）, ロードバランス用のコンテナ `nginxのコンテナを追加しておく, ターゲットグループ名はALB作成時に（ルーティング作成時に）作るもの`
 → ALB: 名前 `githubactions-nginx-service-alb`, VPC `Fargateクラスタ用に作成したVPC`, AZ `2つ、サブネットはVPC内のpublicなやつ`, SG `task定義適用時に作成された 80 ポートを許可しているSG`, ルーティング `ghactions-nginx-service-alb-tg` `ターゲットグループの種類は IP で。`
 → 作成したサービス名をactions yamlに設定して再挑戦！
-→
 
-
+See: [Amazon ECS の動的ポートマッピングをセットアップする](https://aws.amazon.com/jp/premiumsupport/knowledge-center/dynamic-port-mapping-ecs/)
 
 
 ## Tips

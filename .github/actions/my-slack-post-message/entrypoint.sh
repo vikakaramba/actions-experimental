@@ -20,16 +20,17 @@ then
   exit 1
 fi
 
-ATTACHMENTS="[]"
-if [ ! -z "${INPUT_ATTACHMENTS}" ]
-then
-  ATTACHMENTS=${INPUT_ATTACHMENTS}
-fi
-
 BLOCKS="[]"
 if [ ! -z "${INPUT_BLOCKS}" ]
 then
   BLOCKS=${INPUT_BLOCKS}
+fi
+
+# (DEPRECATED)
+ATTACHMENTS="[]"
+if [ ! -z "${INPUT_ATTACHMENTS}" ]
+then
+  ATTACHMENTS=${INPUT_ATTACHMENTS}
 fi
 
 jsonfile=/tmp/result.json
@@ -37,11 +38,12 @@ jsonfile=/tmp/result.json
 # See:
 # - channel: https://api.slack.com/methods/chat.postMessage#arg_channel
 # - text: https://api.slack.com/methods/chat.postMessage#arg_text
-# - attachments: https://api.slack.com/methods/chat.postMessage#arg_attachments
+# - blocks: https://api.slack.com/methods/chat.postMessage#arg_blocks , https://api.slack.com/reference/block-kit/blocks
+# - (DEPRECATED) attachments: https://api.slack.com/methods/chat.postMessage#arg_attachments
 curl -s -X POST \
      -H "Content-type: application/json; charset=UTF-8" \
      -H "Authorization: Bearer ${INPUT_BOT_TOKEN}" \
-     -d "{\"channel\":\"${INPUT_CHANNEL_ID}\",\"text\":\"${INPUT_TEXT}\",\"link_names\":${INPUT_LINK_NAMES},\"attachments\":${ATTACHMENTS},\"blocks\":${BLOCKS}}" \
+     -d "{\"channel\":\"${INPUT_CHANNEL_ID}\",\"text\":\"${INPUT_TEXT}\",\"link_names\":${INPUT_LINK_NAMES},\"blocks\":${BLOCKS}},\"attachments\":${ATTACHMENTS}" \
      -o ${jsonfile} \
      https://slack.com/api/chat.postMessage
 

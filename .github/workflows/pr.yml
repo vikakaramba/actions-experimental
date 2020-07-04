@@ -34,35 +34,37 @@ jobs:
       with:
         bot_token: ${{ secrets.SLACK_BOT_TOKEN }}
         channel_id: ${{ secrets.SLACK_CHANNEL_ID }}
-        text: "@here Slackにメッセージ飛ばしてみてるで"
-        attachments: |
-          [
-            {
-              "color": "good",
-              "author_name": "${{ github.actor }}",
-              "author_icon": "${{ github.event.sender.avatar_url }}",
-              "fields": [
-                {
-                  "title": "GitHub Actions URL",
-                  "value": "${{ github.event.repository.url }}/actions/runs/${{ github.run_id }}"
-                },
-                {
-                  "title": "Latest Commit Hash",
-                  "value": "${{ github.event.after }}"
-                }
-              ]
-            }
-          ]
+        text: "@here Slackにメッセージ飛ばしてみてるで text"
+        # See: https://api.slack.com/reference/block-kit/blocks
         blocks: |
           [
             {
               "type": "section",
               "text": {
                 "type": "plain_text",
-                "text": "Hello world"
+                "text": "@here Slackにblocksのtextから送信しとるで"
               }
             }
           ]
+        # (DEPRECATED)
+        # attachments: |
+        #   [
+        #     {
+        #       "color": "good",
+        #       "author_name": "${{ github.actor }}",
+        #       "author_icon": "${{ github.event.sender.avatar_url }}",
+        #       "fields": [
+        #         {
+        #           "title": "GitHub Actions URL",
+        #           "value": "${{ github.event.repository.url }}/actions/runs/${{ github.run_id }}"
+        #         },
+        #         {
+        #           "title": "Latest Commit Hash",
+        #           "value": "${{ github.event.after }}"
+        #         }
+        #       ]
+        #     }
+        #   ]
 
     - id: my-slack-post-on-failure
       name: my slack post message action on failure

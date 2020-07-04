@@ -22,10 +22,11 @@ fi
 
 jsonfile=/tmp/result.json
 
+# See: attachments: https://api.slack.com/methods/chat.postMessage#arg_attachments
 curl -s -X POST \
      -H "Content-type: application/json; charset=UTF-8" \
      -H "Authorization: Bearer ${INPUT_BOT_TOKEN}" \
-     -d "{\"channel\":\"${INPUT_CHANNEL_ID}\",\"text\":\"${INPUT_TEXT}\"}" \
+     -d "{\"channel\":\"${INPUT_CHANNEL_ID}\",\"text\":\"${INPUT_TEXT}\",\"attachments\":\"${INPUT_ATTACHMENTS}\"}" \
      -o ${jsonfile} \
      https://slack.com/api/chat.postMessage
 

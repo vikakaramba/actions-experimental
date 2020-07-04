@@ -34,7 +34,38 @@ jobs:
       with:
         bot_token: ${{ secrets.SLACK_BOT_TOKEN }}
         channel_id: ${{ secrets.SLACK_CHANNEL_ID }}
-        text: "Hello HogeHuga World"
+        text: "Slackにattachments付きでメッセージ飛ばしてみてるで"
+        attachments: |
+          [
+            {
+              "color": "good",
+              "author_name": "${{ github.actor }}",
+              "author_icon": "${{ github.event.sender.avatar_url }}",
+              "fields": [
+                {
+                  "title": "Commit Message",
+                  "value": "${{ env.COMMIT_MESSAGE }}"
+                },
+                {
+                  "title": "GitHub Actions URL",
+                  "value": "${{ github.event.repository.url }}/actions/runs/${{ github.run_id }}"
+                },
+                {
+                  "title": "Compare URL",
+                  "value": "${{ github.event.compare }}"
+                }
+              ]
+            }
+          ]
+
+    - id: my-slack-post-on-failure
+      name: my slack post message action on failure
+      if: ${{ failure() }}
+      uses: ./.github/actions/my-slack-post-message
+      with:
+        bot_token: ${{ secrets.SLACK_BOT_TOKEN }}
+        channel_id: ${{ secrets.SLACK_CHANNEL_ID }}
+        text: "なんか失敗したで！！"
 
     - id: dump-contexts-after
       name: Dump contexts (After)

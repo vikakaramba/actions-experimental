@@ -73,11 +73,10 @@ jobs:
     # （対象IAMにS3へのアクセスポリシー（AmazonS3FullAccess）を付与しておき、バケットとバケット内フォルダは事前に作成しておくこと）
     - id: sync-s3-whole
       name: Sync repositry contents to S3
-      # FIXME: 一旦dryrun
       env:
         S3_BUCKET: ${{ secrets.S3_BUCKET }}
       run: |
-        aws s3 sync ./ s3://$S3_BUCKET/actions-experimental --exclude '.git/*' --exclude '.envrc' --delete --dryrun
+        aws s3 sync ./ s3://$S3_BUCKET/actions-experimental --exclude '.git/*' --exclude '.envrc' --exclude '.env' --delete
 
     - id: dump-contexts-after
       name: Dump contexts (After)

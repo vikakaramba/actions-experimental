@@ -36,7 +36,7 @@ jobs:
         channel_id: ${{ secrets.SLACK_CHANNEL_ID }}
         # Note: "text" でのメンション指定はこれでOK。特定ユーザー指定時はユーザー名ではなくユーザーIDで指定する必要があるので注意
         # text: "<!here>\n<!channel>\nSlackにメッセージ飛ばしてみてるで text"
-        text: "nSlackにメッセージ飛ばしてみてるで text"
+        text: "Slackにメッセージ飛ばしてみてるで text"
         # See: https://api.slack.com/reference/block-kit/blocks
         # blocks 内の "text" で同じ形式でメンションを指定しても効かない -> typeを mrkdwn にしたら解決
         blocks: |

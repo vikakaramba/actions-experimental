@@ -13,11 +13,12 @@ inputs:
   text:
     description: 'Posted text'
     required: true
-  attachments:
-    description: 'Attachments'
-    required: false
   blocks:
     description: 'Blocks'
+    required: false
+  # (DEPRECATED)
+  attachments:
+    description: 'Attachments'
     required: false
 
 # See: https://help.github.com/en/actions/creating-actions/metadata-syntax-for-github-actions#outputs

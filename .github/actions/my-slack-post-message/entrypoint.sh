@@ -1,6 +1,6 @@
 #!/bin/sh
 
-set -u
+set -eu
 
 if [ -z "${INPUT_BOT_TOKEN}" ]
 then
@@ -41,11 +41,11 @@ curl -s -X POST \
 
 echo "::set-output name=json::$(cat ${jsonfile})"
 
-echo "TEST: X1"
+set +e
 grep '"ok":false' ${jsonfile}
 if [ $? -eq 0 ]
 then
   echo "ERROR: slack returned error response"
   exit 1
 fi
-echo "TEST: X2"
+set -e

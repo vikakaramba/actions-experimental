@@ -26,13 +26,14 @@ jobs:
       uses: actions/checkout@v2
 
     # TODO:
-    # 1. ベンチマーク結果をルートフォルダ直下に作成してpushする
+    # 1. ベンチマーク結果（注: このaction例はダミーのファイルにしてある）をルートフォルダ直下に作成してpushする
     # 2. 1 を含めて、新規release をdraft で作成する
     - id: create-benchmark-report
       name: create benchmark report
       run: date +%s > BENCHMARK_MASTER.txt
 
     # See: https://stackoverflow.com/questions/57921401/push-to-origin-from-github-action
+    # masterブランチへの保護設定を掛けていると失敗するので、保護してるプロジェクトでは別途対応が必要
     - id: commit-push-report
       name: commit and push benchmark report
       run: |
@@ -44,6 +45,7 @@ jobs:
         git commit -m "Automated update benchmark report"
         git push
 
+    # draft releaseを作成（draftなので最終的なrelease publishはgithubのweb画面から実施する）
     - id: create-release
       name: create Release
       uses: actions/create-release@v1
@@ -58,6 +60,24 @@ jobs:
           - Second Change
         draft: true
         prerelease: false
+
+    ### AWS
+    - name: Configure AWS credentials
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: ap-northeast-1
+
+    # s3へのsync（リポジトリ全体）
+    # （バケットとバケット内フォルダは事前に作成しておくこと）
+    - id: sync-s3-whole
+      name: Sync repositry contents to S3
+      # FIXME: 一旦dryrun
+      env:
+        S3_BUCKET: ${{ secrets.S3_BUCKET }}
+      run: |
+        aws s3 sync ./ s3://$S3_BUCKET/actions-experimental --exclude '.git/*' --exclude '.envrc' --delete --dryrun
 
     - id: dump-contexts-after
       name: Dump contexts (After)

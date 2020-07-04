@@ -41,7 +41,7 @@ curl -s -X POST \
 
 echo "::set-output name=json::$(cat ${jsonfile})"
 
-grep '"error":' ${jsonfile}
+grep '"ok":false' ${jsonfile}
 if [ $? -eq 0 ]
 then
   echo "slack returned error response"

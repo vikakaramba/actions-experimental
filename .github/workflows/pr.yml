@@ -44,7 +44,7 @@ jobs:
               "fields": [
                 {
                   "title": "Commit Message",
-                  "value": "${{ env.COMMIT_MESSAGE }}"
+                  "value": "${{ github.event.pull_request.title }}"
                 },
                 {
                   "title": "GitHub Actions URL",
@@ -52,7 +52,7 @@ jobs:
                 },
                 {
                   "title": "Compare URL",
-                  "value": "${{ github.event.compare }}"
+                  "value": "${{ github.event.repositry.compare_url }}"
                 }
               ]
             }

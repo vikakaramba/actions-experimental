@@ -13,8 +13,15 @@ inputs:
   text:
     description: 'Posted text'
     required: true
+  link_names:
+    description: 'Link names'
+    required: false
+    default: true
   attachments:
     description: 'Attachments'
+    required: false
+  blocks:
+    description: 'Blocks'
     required: false
 
 # See: https://help.github.com/en/actions/creating-actions/metadata-syntax-for-github-actions#outputs

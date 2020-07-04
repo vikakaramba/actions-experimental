@@ -34,7 +34,7 @@ jobs:
       with:
         bot_token: ${{ secrets.SLACK_BOT_TOKEN }}
         channel_id: ${{ secrets.SLACK_CHANNEL_ID }}
-        text: "Slackにattachments付きでメッセージ飛ばしてみてるで"
+        text: "@here Slackにメッセージ飛ばしてみてるで"
         attachments: |
           [
             {
@@ -51,6 +51,16 @@ jobs:
                   "value": "${{ github.event.after }}"
                 }
               ]
+            }
+          ]
+        blocks: |
+          [
+            {
+              "type": "section",
+              "text": {
+                "type": "plain_text",
+                "text": "Hello world"
+              }
             }
           ]
 

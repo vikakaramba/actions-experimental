@@ -49,10 +49,6 @@ jobs:
                 {
                   "title": "GitHub Actions URL",
                   "value": "${{ github.event.repository.url }}/actions/runs/${{ github.run_id }}"
-                },
-                {
-                  "title": "Compare URL",
-                  "value": "${{ github.event.repositry.compare_url }}"
                 }
               ]
             }

@@ -4,19 +4,19 @@ set -eu
 
 if [ -z "${INPUT_BOT_TOKEN}" ]
 then
-  echo "input 'bot_token' is not set"
+  echo "ERROR: input 'bot_token' is not set"
   exit 1
 fi
 
 if [ -z "${INPUT_CHANNEL_ID}" ]
 then
-  echo "input 'channel_id' is not set"
+  echo "ERROR: input 'channel_id' is not set"
   exit 1
 fi
 
 if [ -z "${INPUT_TEXT}" ]
 then
-  echo "input 'text' is not set"
+  echo "ERROR: input 'text' is not set"
   exit 1
 fi
 
@@ -41,9 +41,11 @@ curl -s -X POST \
 
 echo "::set-output name=json::$(cat ${jsonfile})"
 
+echo "TEST: X1"
 grep '"ok":false' ${jsonfile}
 if [ $? -eq 0 ]
 then
-  echo "slack returned error response"
+  echo "ERROR: slack returned error response"
   exit 1
 fi
+echo "TEST: X2"

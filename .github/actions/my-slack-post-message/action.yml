@@ -13,6 +13,12 @@ inputs:
   text:
     description: 'Posted text'
     required: true
+  attachments:
+    description: 'Attachments'
+    required: false
+  blocks:
+    description: 'Blocks'
+    required: false
 
 # See: https://help.github.com/en/actions/creating-actions/metadata-syntax-for-github-actions#outputs
 outputs:
@@ -32,8 +38,8 @@ runs:
   using: 'docker'
   image: 'Dockerfile'
   #image: 'docker://debian:stetch-slim'
-  args:
-    - ${{ inputs.channel_id }}
+  #args:
+    #- ${{ inputs.channel_id }}
   #pre-entrypoint: '/app/setup.sh'
   #pre-if: 'runner.os == linux'
   #entrypoint: 'entrypoint.sh'

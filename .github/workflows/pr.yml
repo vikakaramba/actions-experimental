@@ -34,7 +34,49 @@ jobs:
       with:
         bot_token: ${{ secrets.SLACK_BOT_TOKEN }}
         channel_id: ${{ secrets.SLACK_CHANNEL_ID }}
-        text: "Hello HogeHuga World"
+        # Note: "text" でのメンション指定はこれでOK。特定ユーザー指定時はユーザー名ではなくユーザーIDで指定する必要があるので注意
+        # text: "<!here>\n<!channel>\nSlackにメッセージ飛ばしてみてるで text"
+        text: "nSlackにメッセージ飛ばしてみてるで text"
+        # See: https://api.slack.com/reference/block-kit/blocks
+        # blocks 内の "text" で同じ形式でメンションを指定しても効かない -> typeを mrkdwn にしたら解決
+        blocks: |
+          [
+            {
+              "type": "section",
+              "text": {
+                "type": "mrkdwn",
+                "text": "Slackにblocksのtextから送信しとるで"
+              }
+            }
+          ]
+        # (DEPRECATED)
+        # attachments: |
+        #   [
+        #     {
+        #       "color": "good",
+        #       "author_name": "${{ github.actor }}",
+        #       "author_icon": "${{ github.event.sender.avatar_url }}",
+        #       "fields": [
+        #         {
+        #           "title": "GitHub Actions URL",
+        #           "value": "${{ github.event.repository.url }}/actions/runs/${{ github.run_id }}"
+        #         },
+        #         {
+        #           "title": "Latest Commit Hash",
+        #           "value": "${{ github.event.after }}"
+        #         }
+        #       ]
+        #     }
+        #   ]
+
+    - id: my-slack-post-on-failure
+      name: my slack post message action on failure
+      if: ${{ failure() }}
+      uses: ./.github/actions/my-slack-post-message
+      with:
+        bot_token: ${{ secrets.SLACK_BOT_TOKEN }}
+        channel_id: ${{ secrets.SLACK_CHANNEL_ID }}
+        text: "なんか失敗したで！！"
 
     - id: dump-contexts-after
       name: Dump contexts (After)

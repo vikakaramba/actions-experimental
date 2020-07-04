@@ -1,4 +1,4 @@
-FROM curlimages/curl:7.70.0
+FROM curlimages/curl:7.71.0
 
 # FIXME: jqをここでインストールしてshで利用するか？を検討する
 

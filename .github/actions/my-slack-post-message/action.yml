@@ -38,8 +38,8 @@ runs:
   using: 'docker'
   image: 'Dockerfile'
   #image: 'docker://debian:stetch-slim'
-  args:
-    - ${{ inputs.channel_id }}
+  #args:
+    #- ${{ inputs.channel_id }}
   #pre-entrypoint: '/app/setup.sh'
   #pre-if: 'runner.os == linux'
   #entrypoint: 'entrypoint.sh'

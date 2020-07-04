@@ -34,17 +34,18 @@ jobs:
       with:
         bot_token: ${{ secrets.SLACK_BOT_TOKEN }}
         channel_id: ${{ secrets.SLACK_CHANNEL_ID }}
-        # Note: "text" でのメンション指定はこれでOK
-        text: "<!here>\n<!channel>\nSlackにメッセージ飛ばしてみてるで text"
+        # Note: "text" でのメンション指定はこれでOK。特定ユーザー指定時はユーザー名ではなくユーザーIDで指定する必要があるので注意
+        # text: "<!here>\n<!channel>\nSlackにメッセージ飛ばしてみてるで text"
+        text: "nSlackにメッセージ飛ばしてみてるで text"
         # See: https://api.slack.com/reference/block-kit/blocks
-        # FIXME: blocks 内の "text" で同じ形式でメンションを指定しても効かない
+        # blocks 内の "text" で同じ形式でメンションを指定しても効かない -> typeを mrkdwn にしたら解決
         blocks: |
           [
             {
               "type": "section",
               "text": {
                 "type": "mrkdwn",
-                "text": "<!here>\n<!channel>\nSlackにblocksのtextから送信しとるで"
+                "text": "Slackにblocksのtextから送信しとるで"
               }
             }
           ]

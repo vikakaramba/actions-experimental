@@ -1,6 +1,6 @@
 #!/bin/sh
 
-set -eu
+set -u
 
 if [ -z "${INPUT_BOT_TOKEN}" ]
 then

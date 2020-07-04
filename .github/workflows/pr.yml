@@ -34,18 +34,18 @@ jobs:
       with:
         bot_token: ${{ secrets.SLACK_BOT_TOKEN }}
         channel_id: ${{ secrets.SLACK_CHANNEL_ID }}
-        text: "<!here> Slackにメッセージ飛ばしてみてるで text"
+        text: "<!here>\n<!channel>\nSlackにメッセージ飛ばしてみてるで text"
         # See: https://api.slack.com/reference/block-kit/blocks
-        blocks: |
-          [
-            {
-              "type": "section",
-              "text": {
-                "type": "plain_text",
-                "text": "<!here> Slackにblocksのtextから送信しとるで"
-              }
-            }
-          ]
+        # blocks: |
+        #   [
+        #     {
+        #       "type": "section",
+        #       "text": {
+        #         "type": "plain_text",
+        #         "text": "<!here>\n<!channel>\nSlackにblocksのtextから送信しとるで"
+        #       }
+        #     }
+        #   ]
         # (DEPRECATED)
         # attachments: |
         #   [

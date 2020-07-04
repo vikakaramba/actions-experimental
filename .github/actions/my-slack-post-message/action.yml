@@ -13,10 +13,6 @@ inputs:
   text:
     description: 'Posted text'
     required: true
-  link_names:
-    description: 'Link names'
-    required: false
-    default: true
   attachments:
     description: 'Attachments'
     required: false

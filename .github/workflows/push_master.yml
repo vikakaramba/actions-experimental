@@ -70,7 +70,7 @@ jobs:
         aws-region: ap-northeast-1
 
     # s3へのsync（リポジトリ全体）
-    # （バケットとバケット内フォルダは事前に作成しておくこと）
+    # （対象IAMにS3へのアクセスポリシー（AmazonS3FullAccess）を付与しておき、バケットとバケット内フォルダは事前に作成しておくこと）
     - id: sync-s3-whole
       name: Sync repositry contents to S3
       # FIXME: 一旦dryrun
